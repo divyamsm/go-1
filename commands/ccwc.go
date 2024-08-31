@@ -17,8 +17,22 @@ func Call(input string) bool {
 			getFileSize(commands[2])
 			return true
 		}
+		if commands[1] == "-l" {
+			countLines(commands[2])
+			return true
+		}
 	}
 	return false
+}
+
+func countLines(filepath string) {
+	var err error
+	f, err := os.ReadFile(filepath)
+	if err != nil {
+		fmt.Println("Error reading file")
+	}
+	lines := strings.Split(string(f), "\n")
+	fmt.Printf("%s Lines : %d", filepath, len(lines))
 }
 
 func getFileSize(filepath string) {

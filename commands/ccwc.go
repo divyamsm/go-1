@@ -1,7 +1,6 @@
-package main
+package commands
 
 import (
-	"bufio"
 	"fmt"
 	"os"
 	"strings"
@@ -11,16 +10,7 @@ import (
 // wc command is used to count the number of lines, words and characters in a file
 // wc -c test.txt
 
-func main() {
-	scanner := bufio.NewScanner(os.Stdin)
-	scanner.Scan()
-	line := scanner.Text()
-	if !call(line) {
-		fmt.Println("Invalid command")
-	}
-}
-
-func call(input string) bool {
+func Call(input string) bool {
 	commands := strings.Fields(strings.TrimSpace(input))
 	if commands[0] == "wc" {
 		if commands[1] == "-c" {
@@ -35,9 +25,12 @@ func getFileSize(filepath string) {
 	var err error
 	var f *os.File
 	f, err = os.Open(filepath)
+	if err != nil {
+		fmt.Println("Error opening file")
+	}
 	info, err := f.Stat()
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Error getting file info")
 	}
 	fmt.Printf("%s : %d", filepath, info.Size())
 }

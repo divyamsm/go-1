@@ -21,8 +21,23 @@ func Call(input string) bool {
 			countLines(commands[2])
 			return true
 		}
+		if commands[1] == "-w" {
+			countWords(commands[2])
+			return true
+		}
 	}
 	return false
+}
+
+func countWords(filepath string) {
+	var err error
+	f, err := os.ReadFile(filepath)
+	if err != nil {
+		fmt.Println("Error reading file")
+		return
+	}
+	words := strings.Fields(string(f))
+	fmt.Printf("%s Words : %d", filepath, len(words))
 }
 
 func countLines(filepath string) {
